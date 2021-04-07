@@ -16,7 +16,7 @@ app.use(express.json())
 
 // Routes
 
-//app.use(require('./routes'))
+app.use('/api', require('./routes'))
 
 // Starting the server
 

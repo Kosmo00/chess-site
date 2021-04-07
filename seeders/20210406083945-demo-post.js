@@ -5,7 +5,7 @@ module.exports = {
     return await queryInterface.bulkInsert('Posts', [{
       user_id: 1,
       category_id: 2,
-      title: 'Mediojuego Típico',
+      title: 'Mediojuego_tipico',
       game: faker.lorem.paragraphs(),
       createdAt: new Date(),
       updatedAt: new Date()
@@ -13,7 +13,7 @@ module.exports = {
     {
       user_id: 2,
       category_id: 1,
-      title: 'Aperturas cerradas',
+      title: 'Aperturas_cerradas',
       game: faker.lorem.paragraphs(),
       createdAt: new Date(),
       updatedAt: new Date()
