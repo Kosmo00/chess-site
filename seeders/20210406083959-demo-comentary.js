@@ -6,7 +6,6 @@ module.exports = {
       user_id: 2,
       post_id: 1,
       body: faker.lorem.paragraph(),
-      deep: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -14,7 +13,7 @@ module.exports = {
       user_id: 3,
       post_id: 1,
       body: faker.lorem.paragraph(),
-      deep: 1,
+      reference_to: 1,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -22,7 +21,6 @@ module.exports = {
       user_id: 4,
       post_id: 1,
       body: faker.lorem.paragraph(),
-      deep: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     }])
