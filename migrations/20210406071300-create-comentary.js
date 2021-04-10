@@ -31,10 +31,8 @@ module.exports = {
       body: {
         type: Sequelize.TEXT
       },
-      deep: {
+      reference_to: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        defaultValue: 0
       },
       createdAt: {
         allowNull: false,

@@ -34,10 +34,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: false
     },
-    deep: {
+    reference_to: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0
     }
   }, {
       sequelize,
