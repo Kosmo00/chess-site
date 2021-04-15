@@ -6,16 +6,9 @@ const comentary = require('../models').Comentary
 module.exports = {
     async list(req, res, next) {
         try {
-            const obtained_posts = await post.findAll({})
-            let response = []
+            const obtained_posts = await post.findAll({ include: user })
 
-            for (let i = 0; i < obtained_posts.length; i++) {
-                response[i] = obtained_posts[i].toJSON()
-                const obtained_user = await obtained_posts[i].getUser()
-                response[i].user = obtained_user
-            }
-
-            return res.status(200).send(response)
+            return res.status(200).send(obtained_posts)
         } catch (err) {
             console.log(err)
             return res.status(400).send(err)
@@ -32,31 +25,17 @@ module.exports = {
             })
 
             const finded_post = await post.findOne({
+                include: {
+                    model: comentary,
+                    include: user
+                },
                 where: {
                     user_id: finded_user.id,
                     title: post_title
                 }
             })
 
-            // Finding commentaries data
-
-            response = finded_post.toJSON()
-            finded_comentaries = await finded_post.getComentaries()
-
-            response.comentaries = []
-
-            for (let i = 0; i < finded_comentaries.length; i++) {
-                response.comentaries[i] = finded_comentaries[i].toJSON()
-                const finded_user = await finded_comentaries[i].getUser()
-                response.comentaries[i].user = finded_user
-            }
-
-            // Finding user data
-
-            new_user = await finded_post.getUser()
-            response.user = new_user.toJSON()
-
-            return res.status(200).send(response)
+            return res.status(200).send(finded_post)
 
         } catch (err) {
             console.log(err)
