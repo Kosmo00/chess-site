@@ -2,11 +2,24 @@ const sequelize = require('sequelize')
 const post = require('../models').Post
 const user = require('../models').User
 const commentary = require('../models').Commentary
+const category = require('../models').Category
+const tag = require('../models').Tag
 
 module.exports = {
     async list(req, res, next) {
         try {
-            const obtained_posts = await post.findAll({ include: user })
+            const obtained_posts = await post.findAll({
+                include: [
+                    {
+                        model: user
+                    }, {
+                        model: category
+                    }, {
+                        model: tag
+                    }
+
+                ]
+            })
 
             return res.status(200).send(obtained_posts)
         } catch (err) {

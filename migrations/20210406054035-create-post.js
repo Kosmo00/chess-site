@@ -35,6 +35,11 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: false
       },
+      visit_counter: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
