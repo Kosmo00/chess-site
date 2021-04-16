@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.Category, {
         foreignKey: 'category_id'
       })
-      this.hasMany(models.Comentary, {
+      this.hasMany(models.Commentary, {
         foreignKey: 'post_id'
       })
     }

@@ -1,7 +1,7 @@
 const sequelize = require('sequelize')
 const post = require('../models').Post
 const user = require('../models').User
-const comentary = require('../models').Comentary
+const commentary = require('../models').Commentary
 
 module.exports = {
     async list(req, res, next) {
@@ -26,7 +26,7 @@ module.exports = {
 
             const finded_post = await post.findOne({
                 include: {
-                    model: comentary,
+                    model: commentary,
                     include: user
                 },
                 where: {
