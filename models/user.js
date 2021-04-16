@@ -12,18 +12,36 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       this.hasMany(models.Post, {
         foreignKey: 'user_id',
-        onDelete: 'CASCADE'
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      })
+      this.belongsTo(models.Role, {
+        foreignKey: 'role_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       })
     }
-  };
+  }
   User.init({
     name: {
       type: DataTypes.STRING(100),
+    },
+    role_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Role',
+        key: 'id'
+      }
     },
     nick: {
       type: DataTypes.STRING(25),
       allowNull: false,
       unique: true
+    },
+    password: {
+      type: DataTypes.STRING(100),
+      allowNull: false
     },
     trainer: {
       type: DataTypes.BOOLEAN,
@@ -33,6 +51,6 @@ module.exports = (sequelize, DataTypes) => {
   }, {
       sequelize,
       modelName: 'User',
-    });
-  return User;
-};
+    })
+  return User
+}

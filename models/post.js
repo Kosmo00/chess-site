@@ -11,14 +11,31 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.belongsTo(models.User, {
-        foreignKey: 'user_id'
+        foreignKey: 'user_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       })
 
       this.belongsTo(models.Category, {
-        foreignKey: 'category_id'
+        foreignKey: 'category_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       })
       this.hasMany(models.Commentary, {
-        foreignKey: 'post_id'
+        foreignKey: 'post_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      })
+      this.belongsTo(models.PostType, {
+        foreignKey: 'postType_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      })
+      this.belongsToMany(models.Tag, {
+        through: 'PostsTags',
+        foreignKey: 'post_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       })
     }
   };
@@ -38,6 +55,15 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
+    postType_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 1,
+      references: {
+        model: 'PostType',
+        key: 'id'
+      }
+    },
     title: {
       type: DataTypes.STRING(50),
       allowNull: false
@@ -45,10 +71,15 @@ module.exports = (sequelize, DataTypes) => {
     game: {
       type: DataTypes.TEXT,
       allowNull: false
+    },
+    visit_counter: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+      allowNull: false
     }
   }, {
       sequelize,
       modelName: 'Post',
-    });
-  return Post;
-};
+    })
+  return Post
+}

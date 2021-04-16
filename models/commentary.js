@@ -11,7 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.belongsTo(models.User, {
-        foreignKey: 'user_id'
+        foreignKey: 'user_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       })
     }
   };
@@ -38,6 +40,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     reference_to: {
       type: DataTypes.INTEGER,
+    },
+    cursor: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     }
   }, {
       sequelize,
