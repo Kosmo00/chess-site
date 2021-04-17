@@ -3,7 +3,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('PostTypes', [{
-      type: 'standart_post',
+      name: 'standart_post',
       createdAt: new Date(),
       updatedAt: new Date()
     }], {});

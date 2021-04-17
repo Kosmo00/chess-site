@@ -9,13 +9,30 @@ module.exports = {
     async list(req, res, next) {
         try {
             const obtained_posts = await post.findAll({
+                attributes: [
+                    'id', 'title', 'game'
+                ],
                 include: [
                     {
-                        model: user
+                        model: user,
+                        attributes: [
+                            'id', 'name', 'nick', 'trainer'
+                        ]
                     }, {
-                        model: category
+                        model: category,
+                        attributes: [
+                            'id',
+                            'name'
+                        ]
                     }, {
-                        model: tag
+                        model: tag,
+                        attributes: [
+                            'id', 'name'
+                        ],
+                        through: {
+                            attributes: []
+                        }
+
                     }
 
                 ]
@@ -38,9 +55,20 @@ module.exports = {
             })
 
             const finded_post = await post.findOne({
+                attributes: [
+                    'id', 'title', 'game'
+                ],
                 include: {
                     model: commentary,
-                    include: user
+                    attributes: [
+                        'body', 'reference_to', 'cursor'
+                    ],
+                    include: {
+                        model: user,
+                        attributes: [
+                            'id', 'name', 'nick', 'trainer'
+                        ]
+                    }
                 },
                 where: {
                     user_id: finded_user.id,
