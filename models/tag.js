@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Tag.init({
-    tag: {
+    name: {
       type: DataTypes.STRING(50),
       allowNull: false
     }
