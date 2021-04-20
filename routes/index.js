@@ -1,15 +1,26 @@
 const express = require('express')
 const router = express.Router()
 
-const post_controller = require('../controllers/posts_controller')
+const posts_controller = require('../controllers/posts_controller')
+const users_controller = require('../controllers/users_controller')
+
+const { isAuth } = require('../middlewares/authMiddleware')
 
 router.get('/', (req, res) => {
     return res.status(200).send('Welcome to the Chess site API')
 })
 
 // Posts controller routes
-router.get('/posts/', post_controller.list)
+router.get('/posts/', posts_controller.list)
 
-router.get('/posts/:user_nick/:post_title', post_controller.find)
+router.get('/posts/:user_nick/:post_title', posts_controller.find)
+
+// Users controller routes
+
+router.post('/register', users_controller.signup)
+
+router.post('/login', users_controller.signin)
+
+router.post('/logout', isAuth, users_controller.logout)
 
 module.exports = router
