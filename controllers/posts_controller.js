@@ -21,8 +21,7 @@ module.exports = {
                     }, {
                         model: category,
                         attributes: [
-                            'id',
-                            'name'
+                            'id', 'name'
                         ]
                     }, {
                         model: tag,
@@ -32,9 +31,7 @@ module.exports = {
                         through: {
                             attributes: []
                         }
-
                     }
-
                 ]
             })
 
@@ -61,7 +58,7 @@ module.exports = {
                 include: {
                     model: commentary,
                     attributes: [
-                        'body', 'reference_to', 'cursor'
+                        'id', 'body', 'reference_to', 'cursor'
                     ],
                     include: {
                         model: user,
@@ -75,9 +72,7 @@ module.exports = {
                     title: post_title
                 }
             })
-
             return res.status(200).send(finded_post)
-
         } catch (err) {
             console.log(err)
             return res.status(400).send(err)

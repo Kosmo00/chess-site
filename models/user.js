@@ -19,7 +19,12 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'role_id',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
-      })
+      }),
+        this.hasOne(models.Token, {
+          foreignKey: 'user_id',
+          onDelete: 'CASCADE',
+          onUpdate: 'CASCADE'
+        })
     }
   }
   User.init({
@@ -32,10 +37,16 @@ module.exports = (sequelize, DataTypes) => {
       references: {
         model: 'Role',
         key: 'id'
-      }
+      },
+      defaultValue: 1
     },
     nick: {
       type: DataTypes.STRING(25),
+      allowNull: false,
+      unique: true
+    },
+    email: {
+      type: DataTypes.STRING,
       allowNull: false,
       unique: true
     },
@@ -47,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false
-    }
+    },
   }, {
       sequelize,
       modelName: 'User',
