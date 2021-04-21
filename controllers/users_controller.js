@@ -15,9 +15,14 @@ module.exports = {
 
             const new_user_token = await createToken(created_user)
 
-            return res.header('x-token', new_user_token.remember_token).send(new_user_token)
+            return res.header('x-token', new_user_token.remember_token).send({
+                id: created_user.id,
+                nick: created_user.nick,
+                token: new_user_token.remember_token
+            })
         }
         catch (err) {
+            console.log(err)
             res.status(400).send(err)
         }
     },
@@ -35,17 +40,30 @@ module.exports = {
                 user_token = await finded_user.getToken()
 
                 if (user_token) {
-                    user_token.expires = new Date(Date.now() + 72000)
+                    const new_date = new Date()
+                    new_date.setMinutes(new_date.getMinutes() + 120)
+                    user_token.expires = new_date
+
                     await user_token.save()
-                    return res.status(200).header('x-token', user_token.remember_token).send(user_token)
+                    return res.status(200).header('x-token', user_token.remember_token).send({
+                        id: finded_user.id,
+                        nick: finded_user.nick,
+                        token: user_token.remember_token
+                    })
                 }
-                user_token = createToken(finded_user)
-                return res.status(200).header('x-token', user_token.remember_token).send(await finded_user.getToken())
+                user_token = await createToken(finded_user)
+
+                return res.status(200).header('x-token', user_token.remember_token).send({
+                    id: finded_user.id,
+                    nick: finded_user.nick,
+                    token: user_token.remember_token
+                })
             }
 
             return res.status(401).send({ message: 'Wrong user or password' })
 
         } catch (err) {
+            console.log(err)
             return res.status(400).send(err)
         }
     },
@@ -57,6 +75,7 @@ module.exports = {
             return res.status(200).send({ message: 'logout succesfully' })
         }
         catch (err) {
+            console.log(err)
             return res.status(400).send(err)
         }
     }

@@ -15,17 +15,6 @@ test('should create a new user', async t => {
     t.deepEqual(res.status, 200)
 })
 
-test('should log in a user', async t => {
-    const data = {
-        nick: 'Kosmo',
-        password: '12345678'
-    }
-
-    const res = await axios.post('http://localhost:4000/api/login', data)
-
-    t.deepEqual(res.status, 200)
-})
-
 test('should fail the log in', async t => {
     const data = {
         nick: 'Kosmo',
@@ -40,7 +29,7 @@ test('should fail the log in', async t => {
     t.deepEqual(res.response.status, 401)
 })
 
-test('should do a log out', async t => {
+test('should do a log in and log out', async t => {
     const data = {
         nick: 'Kosmo',
         password: '12345678'
