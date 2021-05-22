@@ -1,3 +1,3 @@
 echo off
 cls
-npm start
+nodemon start

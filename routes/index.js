@@ -15,12 +15,19 @@ router.get('/posts/', posts_controller.list)
 
 router.get('/posts/:user_nick/:post_title', posts_controller.find)
 
-// Users controller routes
+/**********************************************************************************
+ * 
+ * Users controller routes
+ *
+***********************************************************************************/
 
+// User authentication
 router.post('/register', users_controller.signup)
-
 router.post('/login', users_controller.signin)
-
 router.post('/logout', isAuth, users_controller.logout)
+
+// Users controller
+
+router.get('/user/:user_nick', users_controller.find)
 
 module.exports = router

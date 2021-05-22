@@ -2,6 +2,9 @@ const sequelize = require('sequelize')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const user = require('../models').User
+const post = require('../models').Post
+const category = require('../models').Category
+const tag = require('../models').Tag
 const token = require('../models').Token
 
 module.exports = {
@@ -77,6 +80,61 @@ module.exports = {
         catch (err) {
             console.log(err)
             return res.status(400).send(err)
+        }
+    },
+    async find(req, res) {
+        const { user_nick } = req.params
+        try {
+            const obtained_user = await user.findOne({
+                where: { nick: user_nick },
+                attributes: [
+                    'id', 'name', 'nick', 'trainer'
+                ],
+                include: [
+                    {
+                        model: post,
+                        attributes: [
+                            'id', 'title', 'game', 'visit_counter'
+                        ],
+                        limit: 15,
+                        include: [
+                            {
+                                model: category,
+                                attributes: [
+                                    'name'
+                                ]
+                            },
+                            {
+                                model: tag,
+                                attributes: [
+                                    'name'
+                                ],
+                                through: {
+                                    attributes: []
+                                }
+                            },
+                            {
+                                model: user,
+                                attributes: [
+                                    'id', 'name', 'nick', 'trainer'
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            })
+            const n_user_posts = await post.count({ where: { user_id: obtained_user.id } })
+            return res.send({
+                user: obtained_user,
+                post_count: n_user_posts
+            })
+        }
+        catch (err) {
+            console.log(err)
+            return res.status(400).send({
+                message: 'Unespected error',
+                err
+            })
         }
     }
 }
