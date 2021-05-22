@@ -47,3 +47,8 @@ test('should do a log in and log out', async t => {
 
     t.deepEqual(res.data.message, 'logout succesfully')
 })
+
+test('should get an user by username', async t => {
+    const res = await axios.get('http://localhost:4000/api/Kosmo')
+    t.deepEqual(res.data.nick, 'Kosmo')
+})
